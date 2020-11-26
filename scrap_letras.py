@@ -14,11 +14,14 @@ for i in range(50):
     #pegar título
     title = soup.select('h1')[0].get_text()
     #pegar compositor
-    compositor = soup.select('.letra-info_comp')[0].get_text()
+    compositor = soup.select('.letra-info_comp > a')[0].get_text()
     if  compositor == 'Sabe de quem é a composição? Envie pra gente.':
         compositor = 'Ministério Jovem'
     else:
-        compositor = compositor.removeprefix('  Composição:')
+        compositor = soup.select('.letra-info_comp')[0].get_text().strip()
+        compositor = compositor.removeprefix('Composição:')
+        compositor = compositor.removesuffix('. Essa informação está errada? Nos avise.')
+        #compositor = compositor.removesuffix('Essa informação está errada? Nos avise.')
     #salvar no firebase (pyrebase)
     #pegar ano
     print(title)
