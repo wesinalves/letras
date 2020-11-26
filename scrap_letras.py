@@ -1,6 +1,6 @@
-import requests, bs4
+import requests, sys, bs4
 print('Searching...')
-res = requests.get('https://www.letras.mus.br/ministerio-jovem/')
+res = requests.get('https://www.letras.mus.br/' + ' '.join(sys.argv[1:]))
 res.raise_for_status()
 soup = bs4.BeautifulSoup(res.text, 'html.parser')
 links = soup.select('.song-name')
@@ -21,9 +21,8 @@ for i in range(50):
         compositor = soup.select('.letra-info_comp')[0].get_text().strip()
         compositor = compositor.removeprefix('Composição:')
         compositor = compositor.removesuffix('. Essa informação está errada? Nos avise.')
-        #compositor = compositor.removesuffix('Essa informação está errada? Nos avise.')
-    #salvar no firebase (pyrebase)
-    #pegar ano
+        #salvar no firebase (pyrebase)
+        #pegar ano
     print(title)
     print(compositor)
 
