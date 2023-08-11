@@ -1,7 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import configparser
 
 class FireConnection:
     '''Classe to represent music entity in dataset'''
@@ -23,6 +22,17 @@ class FireConnection:
             print(title + " has been saved!")
         except:
             print("Something goes wrong on firebase!")
+    
+    def get_musics(self):
+        doc_ref = self.db.collection(u'musicas')
+        docs = doc_ref.stream()
+        return docs
+
+    def get_music(self, title):
+        doc_ref = self.db.collection(u'musicas')
+        docs = doc_ref.where(u'titulo', u'==', title).stream()
+        return docs
+
 
         
         
